@@ -10,6 +10,12 @@ const userSchema=new Schema({
         required:true,
         unique:true
     },
+    phone: {
+    type: String,
+    required: true,
+    match: /^(\+91|91)?[6-9]\d{9}$/,
+    trim: true
+    },
     salt:{
         type:String,
     },
@@ -41,6 +47,9 @@ userSchema.pre('save',function(next){
     .digest('hex');
     user.password=hashPassword;
     user.salt=salt;
+    if (!this.phone.startsWith('+91')) {
+    this.phone = '+91' + this.phone.replace(/^(\+91|91)?/, '');
+    }
     next();
 
 })
