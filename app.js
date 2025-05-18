@@ -10,7 +10,6 @@ const checkauthenticationcookie=require('./middlewares/authentication');
 const Blog = require('./models/blog.model');
 const app=express();
 const PORT=process.env.PORT||3000;
-
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(express.static(path.resolve('./public')));

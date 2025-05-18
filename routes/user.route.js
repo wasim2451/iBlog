@@ -50,7 +50,7 @@ router.post('/signin',async(req,res)=>{
 })
 
 router.post('/signup',upload.single('avatar') ,async (req,res)=>{
-    console.log(req.body);
+    // console.log(req.body);
     const {fullname,email,password}=req.body;
     let profileimgURL;
     if(req.file){
