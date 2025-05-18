@@ -2,6 +2,10 @@
 <html lang="en">
  <%-include('./Partials/Head.ejs')  %>
  <style>
+        * {
+            box-sizing: border-box;
+        }
+
       html,
       body {
         height: 100%;
@@ -19,7 +23,14 @@
 
       main {
         flex: 1;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 30px 15px;
       }
+      @media (max-width: 600px) {
+        main {
+      padding: 20px 10px;
+        }
 
       footer {
         margin-top: auto;
@@ -144,7 +155,7 @@
 <body>
     <%- include('./Partials/Navbar.ejs') %>
     <% if (typeof user !="undefined" || user!=null) { %>
-            <main style="max-width: 1000px; margin: 0 auto; padding: 30px; font-family: 'Segoe UI', sans-serif; color: #333;">
+            <main style="max-width: 1000px; margin: 0 auto; padding: 30px 15px; font-family: 'Segoe UI', sans-serif; color: #333;"">
 
   <!-- User Header -->
   <section style="display: flex; align-items: center; gap: 20px; margin-bottom: 40px; border-bottom: 2px solid #eee; padding-bottom: 20px;">
@@ -200,7 +211,7 @@
       </div>
     <% } %>
   </section>
-</main>
+            </main>
 
 
     <% } %>
