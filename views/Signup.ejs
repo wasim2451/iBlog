@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('./Partials/Head.ejs') %>
+    <style>
+      body {
+        background-color: #f2f5f9;
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .signup-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .signup-card {
+        background: #ffffff;
+        display: flex;
+        flex-direction: column;
+        width: 95%;
+        max-width: 1000px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .signup-image {
+        flex: 1;
+        height: 250px;
+        background-image: url('https://img.freepik.com/free-vector/sign-up-concept-illustration_114360-7885.jpg?ga=GA1.1.1727319240.1747090589&semt=ais_hybrid&w=740');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
+
+      .signup-form {
+        flex: 1;
+        padding: 50px 40px;
+      }
+
+      .signup-form h2 {
+        margin-bottom: 30px;
+        color: #333;
+        font-weight: 600;
+      }
+
+      .form-label {
+        font-weight: 500;
+        margin-bottom: 5px;
+      }
+
+      .form-control {
+        padding: 12px;
+        border-radius: 0;
+        border: 1px solid #ccc;
+      }
+
+      .btn-dark {
+        margin-top: 20px;
+        padding: 12px;
+        font-weight: 500;
+        font-size: 1rem;
+        border-radius: 0;
+      }
+
+      @media (min-width: 768px) {
+        .signup-card {
+          flex-direction: row;
+        }
+
+        .signup-image {
+          height: auto;
+          width: 50%;
+        }
+
+        .signup-form {
+          width: 50%;
+        }
+      }
+    </style>
+</head>
+
+<body>
+  <%- include('./Partials/Navbar.ejs') %>
+
+    <div class="signup-wrapper">
+      <div class="signup-card">
+        <div class="signup-image"></div>
+        <div class="signup-form">
+          <h2>Create Your Account</h2>
+          <form action="/user/signup" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="fullname" class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="fullname" name="fullname" placeholder="John Doe" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" required>
+            </div>
+            <!-- 👇 Avatar upload field -->
+            <div class="mb-3">
+              <label for="avatar" class="form-label">Upload Avatar</label>
+              <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*">
+            </div>
+            <button type="submit" class="btn btn-dark w-100">Sign Up</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+    <%- include('./Partials/Script.ejs') %>
+</body>
+
+</html>

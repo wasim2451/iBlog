@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('./Partials/Head.ejs') %>
+    <style>
+      .form-container {
+        max-width: 700px;
+        margin: auto;
+        margin-top: 40px;
+        background: #f9f9f9;
+        padding: 30px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      }
+
+      body {
+        background-color: #f8fafc;
+        /* Light grey background */
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        justify-content: flex-start;
+      }
+
+      html {
+        height: 100%;
+      }
+
+      footer {
+        margin-top: auto;
+      }
+
+      .create-blog-section {
+        padding: 40px 20px;
+        background-color: #f9fafb;
+        font-family: 'Segoe UI', sans-serif;
+      }
+
+      .blog-container {
+        display: flex;
+        max-width: 1100px;
+        margin: auto;
+        background: #fff;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      }
+
+      .image-section {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* padding: 10px; */
+        background-color: #fff;
+      }
+
+      .image-section img {
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+      }
+
+      .form-section {
+        flex: 1;
+        padding: 40px;
+      }
+
+      .form-label {
+        font-weight: 500;
+        color: #333;
+      }
+
+      @media (max-width: 768px) {
+        .blog-container {
+          flex-direction: column;
+        }
+
+        .image-section,
+        .form-section {
+          padding: 20px;
+        }
+      }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+</head>
+
+<body>
+  <%- include('./Partials/Navbar.ejs') %>
+    <% if (typeof user==='undefined' ||user===null) { %>
+      
+    <% } else {%>
+      <section class="create-blog-section">
+        <div class="blog-container">
+          <!-- Left Image -->
+          <div class="image-section">
+            <img
+              src="https://img.freepik.com/free-vector/social-growth-concept-illustration_114360-305.jpg?ga=GA1.1.1727319240.1747090589&semt=ais_hybrid&w=740"
+              alt="Blog Illustration" />
+          </div>
+
+          <!-- Right Form -->
+          <div class="form-section">
+            <h2 class="text-center mb-4"><b>Create New Blog</b></h2>
+            <form action="/blog/create" method="POST" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label for="title" class="form-label">Blog Title</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="cover" class="form-label">Cover Image</label>
+                <input class="form-control" type="file" id="cover" name="coverImage" accept="image/*" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="content" class="form-label">Content</label>
+                <div id="editor" style="height: 200px;"></div>
+                <input type="hidden" name="content" id="hidden-content">
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-success">Publish Blog</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+          <% } %>
+
+
+            <%- include('./Partials/Footer.ejs') %>
+
+              <%- include('./Partials/Script.ejs') %>
+                <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+                <script>
+                  const toolbarOptions = [
+                    ['bold', 'italic', 'underline'],
+                    [{ 'header': 1 }, { 'header': 2 }],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    ['link', 'image'],
+                    [{ 'color': [] }, { 'background': [] }],
+                    ['clean']
+                  ];
+
+                  const quill = new Quill('#editor', {
+                    modules: { toolbar: toolbarOptions },
+                    theme: 'snow'
+                  });
+
+                  document.querySelector('form').onsubmit = function () {
+                    const html = quill.root.innerHTML;
+                    document.getElementById('hidden-content').value = html;
+                  };
+                </script>
+</body>
+
+</html>

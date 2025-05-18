@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('./Partials/Head.ejs') %>
+    <style>
+      body {
+        background-color: #fff;
+        /* Light grey background */
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        justify-content: flex-start;
+      }
+
+      html {
+        height: 100%;
+      }
+
+      footer {
+        margin-top: auto;
+      }
+
+      .container {
+        max-width: 1050px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      .blog-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #1e1e1e;
+      }
+
+      .blog-image {
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+        margin-bottom: 30px;
+        border-radius: 6px;
+      }
+
+      .blog-content {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .back-home {
+        display: inline-block;
+        text-decoration: none;
+        font-size: 18px;
+        color: hsl(205, 100%, 55%);
+        border-bottom: 2px solid transparent;
+        transition: border-color 0.3s ease, color 0.3s ease;
+        margin-top: 10px;
+        font-weight: 600;
+      }
+
+      .back-home:hover {
+        color: #005999;
+        border-color: #005999;
+      }
+    </style>
+</head>
+
+<body>
+  <%- include('./Partials/Navbar.ejs') %>
+
+    <div class="container">
+      <% if (blog) { %>
+        <h1 class="blog-title">
+          <%= blog.title %>
+        </h1>
+
+        <% if (blog.coverURL) { %>
+          <img src="/<%= blog.coverURL %>" alt="Blog Cover Image" class="blog-image">
+          <% } %>
+
+            <div class="blog-content">
+              <%- blog.content %>
+            </div>
+
+            <div>
+              <% if (blog.author.profileimgURL==="undefined") { %>
+               <img src="/images/default.png" width="50px" height="50px" alt="UserProfile" style="margin-right: 20px; border-radius: 50%;">
+              <% } else{ %>
+              <img src="/<%=blog.author.profileimgURL  %>" width="50px" height="50px" alt="UserProfile" style="margin-right: 20px; border-radius: 50%;">
+              <% } %>
+              <span
+                style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;"><b>
+                  <%= blog.author.fullname %>
+                </b></span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+              <a href="/" class="back-home">← Back to Home</a>
+              <% if (typeof user !='undefined' ||user!=null) { %>
+                <% if (user.id===blog.author.id) { %>
+                  <div style="display: flex; gap: 10px;">
+                    <a href="/blog/user/editblog/<%=blog._id  %>"><button class="btn btn-success"> Edit </button></a>
+                    <a href="/blog/user/deleteblog/<%=blog._id  %>"><button class="btn btn-danger">Delete</button></a>
+                  </div>
+                  <% } %>
+                    <% } %>
+            </div>
+            <div class="container mt-5">
+              <% if (typeof user !=='undefined' && user !=null) { %>
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <h5 class="card-title">Leave a Comment</h5>
+                    <form action="/blog/comment/<%= blog._id %>" method="POST">
+                      <div class="mb-3">
+                        <textarea class="form-control" name="content" rows="3" placeholder="Enter your comment here..."
+                          required></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                  </div>
+                </div>
+                <% } %>
+
+                  <div class="comments-section">
+                    <h4 class="mb-3">Comments (<%= comments.length %>)</h4>
+
+                    <% if (comments.length===0) { %>
+                      <p class="text-muted">No comments yet. 
+                        <% if (typeof user!='undefined'||user!=null) { %>
+                         Be the First one to Comment ! 
+                        <% } %>
+                      </p>
+                      <% } else { %>
+                        <% comments.forEach(comment=> { %>
+                          <div class="card mb-3">
+                            <div class="card-body">
+                              <h6 class="card-subtitle mb-1 text-muted">
+                                <%= comment.author.fullname %>
+                              </h6>
+                              <p class="card-text">
+                                <%= comment.content %>
+                              </p>
+                              <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <small class="text-muted">
+                                <%= new Date(comment.createdAt).toLocaleString() %>
+                                </small>
+                                <small>
+                                  <% if (typeof user!='undefined'||user!=null) { %>
+                                   <% if (user.id===comment.author._id.toString()) { %>
+                                        <a href="/blog/comment/delete/<%= blog._id %>/<%= comment._id  %>"><button class="btn btn-danger">Delete</button>
+                                        </a>
+                                    <% } %>
+                                  <% } %>
+                                </small>
+                              </div>
+                              
+                            </div>
+                          </div>
+                          <% }) %>
+                            <% } %>
+                  </div>
+            </div>
+
+
+            <% } else { %>
+              <p>Blog not found.</p>
+              <% } %>
+    </div>
+    <%- include('./Partials/Footer.ejs') %>
+      <%- include('./Partials/Script.ejs') %>
+</body>
+
+</html>

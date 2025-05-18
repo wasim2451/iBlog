@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./Partials/Head.ejs') %>
+        <style>
+        html, body {
+            height: 100%;
+             margin: 0;
+            padding: 0;
+            }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fff;
+}
+
+        main {
+            flex: 1; /* Allow main content to grow and push footer to bottom */
+        }
+
+        footer {
+            margin-top: auto;
+        }
+
+        .blogs-wrapper {
+            /* Reduced padding on the sides */
+            margin-top: 30px;
+            margin-left: 4%;
+            padding: 0 10px;
+            /* Reduced padding */
+            margin-bottom: 30px;
+        }
+
+        .blogs-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 35px;
+            justify-content: flex-start;
+            /* Align left */
+        }
+
+        .blog-card {
+            width: 300px;
+            /* Adjusted width */
+            background-color: #fff;
+            /* White background */
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            /* Soft shadow */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .blog-card:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            /* Slight shadow on hover */
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 180px;
+            /* Fixed height for image */
+            object-fit: cover;
+        }
+
+        .blog-content {
+            padding: 15px;
+            flex-grow: 1;
+        }
+
+        .blog-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+            /* Dark text for title */
+            margin-bottom: 10px;
+        }
+
+        .blog-snippet {
+            font-size: 0.9rem;
+            color: #666;
+            /* Muted grey for snippet text */
+            max-height: 70px;
+            overflow: hidden;
+            line-height: 1.5;
+        }
+
+        .read-more {
+            margin-top: 5px;
+            font-size: 0.9rem;
+            color: #007bff;
+            /* Muted blue text */
+            text-decoration: none;
+            transition: color 0.3s ease;
+            padding: 5%;
+        }
+
+        .read-more:hover {
+            color: #0056b3;
+            /* Darker blue on hover */
+        }
+
+        .no-blogs {
+            text-align: left;
+            margin-top: 40px;
+            font-size: 1.2rem;
+            color: #888;
+            /* Lighter grey for "no blogs" message */
+        }
+
+        .author-name {
+            display: block;
+            text-align: right;
+            font-size: 0.85rem;
+            color: #666;
+            margin: 10px 15px;
+        }
+        </style>
+</head>
+
+<body>
+    <%- include('./Partials/Navbar.ejs') %>
+<main>
+    <div class="blogs-wrapper">
+  <% if (blogs.length === 0) { %>
+    <div class="no-blogs">
+      <p>No blogs yet. Start by writing your first one!</p>
+    </div>
+  <% } else { %>
+    <div class="blogs-container">
+      <% blogs.forEach(blog => { %>
+        <div class="blog-card">
+          <% if (blog.coverURL) { %>
+            <img src="<%= blog.coverURL %>" alt="Blog Cover">
+          <% } %>
+
+          <div class="blog-content">
+            <div class="blog-title">
+              <%= blog.title %>
+            </div>
+            <div class="blog-snippet">
+              <%= blog.content.replace(/(<([^>]+)>)/gi, "").substring(0, 120) %>...
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <a class="read-more" href="/blog/view/showblog/<%= blog._id %>">Read More ...</a>
+            <span class="author-name"><%= blog.author.fullname %></span>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</div>
+</main>
+
+
+<div> <%- include('./Partials/Footer.ejs') %></div>
+
+<%- include('./Partials/Script.ejs') %>
+</body>
+
+</html>

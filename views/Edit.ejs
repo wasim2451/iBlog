@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./Partials/Head.ejs') %>
+  <style>
+    body {
+      background-color: #f4f6f9;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 0;
+      margin: 0;
+    }
+
+    .edit-container {
+      max-width: 700px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .edit-container h2 {
+      margin-bottom: 25px;
+      font-size: 1.6rem;
+      color: #333;
+    }
+
+    form input[type="text"],
+    form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    form textarea {
+      resize: vertical;
+      min-height: 200px;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .form-actions button,
+    .form-actions a {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .btn-primary:hover,
+    .btn-secondary:hover {
+      opacity: 0.9;
+    }
+
+    label {
+      font-weight: 500;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .current-image {
+      margin-bottom: 20px;
+    }
+
+    .current-image img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+  </style>
+  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
+  <%- include('./Partials/Navbar.ejs') %>
+
+  <div class="edit-container">
+    <h2>Edit Blog</h2>
+    <form action="/blog/user/editblog/<%= blog._id %>" method="POST" enctype="multipart/form-data">
+      <label for="title">Title</label>
+      <input type="text" name="title" id="title" value="<%= blog.title %>" required>
+
+      <label for="content">Content</label>
+      <div id="editor" required><%- blog.content %></div>
+      <input type="hidden" name="content" id="hidden-content">
+
+      <% if (blog.coverURL) { %>
+        <div class="current-image">
+          <label>Current Cover Image:</label>
+          <img src="/<%= blog.coverURL %>" alt="Current Blog Image">
+        </div>
+      <% } %>
+
+      <label for="cover">Change Cover Image (optional)</label>
+      <input type="file" name="cover" id="cover" accept="image/*">
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-warning">Update Blog</button>
+        <a href="/" class="btn-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+  <%- include('./Partials/Footer.ejs')  %>
+  <%- include('./Partials/Script.ejs') %>
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+  <script>
+    const toolbarOptions = [
+          ['bold', 'italic', 'underline'],
+          [{ 'header': 1 }, { 'header': 2 }],
+          [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+          ['link', 'image'],
+          [{ 'color': [] }, { 'background': [] }],
+          ['clean']
+        ];
+      
+        const quill = new Quill('#editor', {
+          modules: { toolbar: toolbarOptions },
+          theme: 'snow'
+        });
+        document.querySelector('form').onsubmit = function () {
+          const html = quill.root.innerHTML;
+          document.getElementById('hidden-content').value = html;
+        };
+  </script>
+</body>
+</html>
