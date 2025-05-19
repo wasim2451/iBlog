@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Verify Your Phone</title>
+    <script>
+        function loadScript() {
+            const script = document.createElement('script');
+            script.src = 'https://www.phone.email/sign_in_button_v1.js';
+            script.async = true;
+            document.body.appendChild(script);
+
+            window.phoneEmailListener = (userObj) => {
+                const user_json_url = userObj.user_json_url;
+
+                fetch(window.location.origin + '/user/verified-user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_json_url,
+                        fullname: "<%= fullname %>",
+                        email: "<%= email %>",
+                        password: "<%= password %>",
+                        profileimgURL: "<%= profileimgURL %>"
+                    })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert("Account created! Redirecting to sign in...");
+                            window.location.href = '/user/signin';
+                        } else {
+                            alert("Verification failed. Try again.");
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Fetch error:', err);
+                    });
+
+            };
+        }
+    </script>
+</head>
+
+<body onload="loadScript()">
+    <h2>Please verify your phone to complete signup</h2>
+    <div class="pe_signin_button" data-client-id="12026639104126382469"></div>
+</body>
+
+</html>
