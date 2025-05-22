@@ -16,14 +16,6 @@ Welcome to **BlogApp**, a dynamic blogging platform where users can register, ve
 
 ---
 
-## 📷 Screenshots
-
-| Login | Dashboard | Admin Panel |
-|-------|-----------|-------------|
-| ![Login](screenshots/login.png) | ![Dashboard](screenshots/dashboard.png) | ![Admin Panel](screenshots/admin.png) |
-
----
-
 ## ⚙️ Tech Stack
 
 - **Frontend:** HTML, CSS, EJS
@@ -37,3 +29,35 @@ Welcome to **BlogApp**, a dynamic blogging platform where users can register, ve
 
 ## 📁 Folder Structure
 
+BlogApp/
+├── models/
+├── routes/
+├── views/
+│ ├── Partials/
+│ ├── Dashboard.ejs
+│ └── ...
+├── public/
+│ ├── images/
+│ └── styles/
+├── .env
+├── index.js
+└── README.md
+
+
+---
+
+## 🧪 Local Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/wasim2451/iBlog.git
+   cd BlogApp
+2.  ```bash
+    npm install
+3. Create a .env file with:
+   ```bash
+   MONGODB_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret
+   PHONEMAIL_API_KEY=your_phoneemail_key
+
+4. Run the Server : npm start
