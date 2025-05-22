@@ -4,6 +4,7 @@ const path=require('path');
 const mongoose=require('mongoose');
 const userRouter=require('./routes/user.route');
 const blogRouter=require('./routes/blog.route');
+const adminRouter=require('./routes/admin.route');
 const blogviewRouter=require('./routes/blog.route');
 const cookieParser = require('cookie-parser');
 const checkauthenticationcookie=require('./middlewares/authentication');
@@ -27,6 +28,7 @@ app.set('view engine','ejs');
 app.set('views',path.resolve('./views'));
 
 app.use(cookieParser());
+app.use('/admin',adminRouter);
 app.use('/user',userRouter);
 app.use('/blog',checkauthenticationcookie('token'),blogRouter);
 app.use('/blog/view',blogviewRouter);
@@ -37,8 +39,6 @@ app.get('/',checkauthenticationcookie('token'),async(req,res)=>{
         blogs:blogs
     });
 });
-
-
 app.listen(PORT,()=>{
     console.log(`Server is listening on ${PORT}`);
 });
