@@ -27,24 +27,6 @@ Welcome to **BlogApp**, a dynamic blogging platform where users can register, ve
 
 ---
 
-## 📁 Folder Structure
-
-BlogApp/
-├── models/
-├── routes/
-├── views/
-│ ├── Partials/
-│ ├── Dashboard.ejs
-│ └── ...
-├── public/
-│ ├── images/
-│ └── styles/
-├── .env
-├── index.js
-└── README.md
-
-
----
 
 ## 🧪 Local Setup
 
