@@ -41,5 +41,6 @@ Welcome to **BlogApp**, a dynamic blogging platform where users can register, ve
    MONGODB_URI=your_mongodb_connection_string
    JWT_SECRET=your_jwt_secret
    PHONEMAIL_API_KEY=your_phoneemail_key
+   ADMIN_PASS=your_admin_pass
 
 4. Run the Server : npm start
