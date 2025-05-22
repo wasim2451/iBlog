@@ -62,6 +62,9 @@ router.get('/user/editblog/:id',async (req,res)=>{
         return res.status(404).render('404ErrorPage.ejs');
     } else {
         const { id } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).send("Invalid Blog ID");
+        }
         const blog = await Blog.findById(id);
         // console.log(blog);
         if (!blog) {
