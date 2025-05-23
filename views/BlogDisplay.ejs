@@ -7,7 +7,6 @@
       body {
         background-color: #fff;
         /* Light grey background */
-        font-family: 'Segoe UI', sans-serif;
         margin: 0;
         padding: 0;
         display: flex;
@@ -28,13 +27,15 @@
         max-width: 1050px;
         margin: 40px auto;
         padding: 0 20px;
+        font-family: 'Inter', sans-serif;
       }
 
       .blog-title {
         font-size: 2.2rem;
-        font-weight: 700;
+        font-weight: 600;
         margin-bottom: 20px;
         color: #1e1e1e;
+        font-family: 'Poppins',sans-serif;
       }
 
       .blog-image {
@@ -92,7 +93,7 @@
               <img src="/<%=blog.author.profileimgURL  %>" width="50px" height="50px" alt="UserProfile" style="margin-right: 20px; border-radius: 50%;">
               <% } %>
               <span
-                style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;"><b>
+                style=" font-family: 'Inter', sans-serif;"><b>
                   <%= blog.author.fullname %>
                 </b></span>
             </div>
