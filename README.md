@@ -12,7 +12,7 @@ Welcome to **BlogApp**, a dynamic blogging platform where users can register, ve
 - 🧾 Rich-text Blog Display with Author Info and Date
 - 📂 Personalized User Dashboard
 - 🛠️ Admin Panel to Manage Users and Blogs
-- 🌐 Deployed on [Railway](https://iblog-dreams.up.railway.app/)
+- 🌐 Deployed Link Here [Railway](https://iblog-dreams.up.railway.app/)
 
 ---
 
